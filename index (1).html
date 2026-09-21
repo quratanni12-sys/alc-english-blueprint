@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALC English · Website Blueprint</title>
+<meta name="description" content="ALC English, Kuala Lumpur: website structure, page templates and 12-week growth roadmap. Proposal for approval.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#07090d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232dd4bf'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-family='Georgia' font-size='32' font-style='italic' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{
+  --bg:#07090d; --bg-2:#0c1016; --card:rgba(255,255,255,.035); --card-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  --ink:#eef1f5; --muted:#8b95a5; --faint:#5b6574;
+  --teal:#2dd4bf; --violet:#8b5cf6; --amber:#f5a524; --rose:#fb7185; --green:#34d399;
+  --grad:linear-gradient(120deg,#2dd4bf 0%,#60a5fa 45%,#8b5cf6 75%,#f472b6 100%);
+  --glass:rgba(12,16,22,.62); --shadow:0 20px 60px -20px rgba(0,0,0,.6);
+  --grid-dot:rgba(255,255,255,.06);
+}
+[data-theme="light"]{
+  --bg:#f6f7fb; --bg-2:#eef0f6; --card:rgba(255,255,255,.75); --card-2:#ffffff;
+  --line:rgba(15,23,42,.08); --line-2:rgba(15,23,42,.16);
+  --ink:#0b1220; --muted:#566074; --faint:#8a93a5;
+  --teal:#0d9488; --violet:#7c3aed; --amber:#c2710c; --rose:#e11d48; --green:#059669;
+  --grad:linear-gradient(120deg,#0d9488 0%,#2563eb 45%,#7c3aed 75%,#db2777 100%);
+  --glass:rgba(255,255,255,.72); --shadow:0 20px 50px -24px rgba(15,23,42,.25);
+  --grid-dot:rgba(15,23,42,.07);
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .4s,color .4s}
+::selection{background:var(--violet);color:#fff}
+a{color:inherit;text-decoration:none}
+.serif{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-style:italic;letter-spacing:-.01em}
+.mono{font-family:"Geist Mono",monospace}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:shine 8s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* ambient bg */
+.aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.aurora i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.35;animation:float 22s ease-in-out infinite}
+.aurora i:nth-child(1){width:560px;height:560px;background:var(--teal);top:-180px;left:-120px}
+.aurora i:nth-child(2){width:520px;height:520px;background:var(--violet);top:10%;right:-160px;animation-delay:-7s}
+.aurora i:nth-child(3){width:420px;height:420px;background:#f472b6;top:55%;left:30%;opacity:.16;animation-delay:-14s}
+[data-theme="light"] .aurora i{opacity:.18}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,40px) scale(1.08)}66%{transform:translate(-40px,70px) scale(.95)}}
+.dots{position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(var(--grid-dot) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 75%)}
+
+/* progress */
+.progress-top{position:fixed;top:0;left:0;height:2px;width:0;background:var(--grad);z-index:100}
+
+/* floating nav */
+.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1100px,calc(100% - 24px));display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border:1px solid var(--line);border-radius:999px;background:var(--glass);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;white-space:nowrap}
+.mark{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;color:#fff;font-family:"Instrument Serif",serif;font-style:italic;font-size:19px;box-shadow:0 6px 20px -6px var(--violet)}
+.links{display:flex;gap:2px;flex:1;justify-content:center;overflow-x:auto;scrollbar-width:none}
+.links::-webkit-scrollbar{display:none}
+.links a{font-size:.83rem;color:var(--muted);padding:7px 12px;border-radius:999px;white-space:nowrap;transition:.2s}
+.links a:hover{color:var(--ink)}
+.links a.active{color:var(--ink);background:var(--card-2)}
+.icon-btn{width:36px;height:36px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:grid;place-items:center;font-size:15px;flex:none}
+.pill-cta{background:var(--ink);color:var(--bg);font-size:.83rem;font-weight:600;padding:9px 16px;border-radius:999px;white-space:nowrap;flex:none}
+
+/* hero */
+.hero{padding:170px 0 70px;text-align:center;position:relative}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border:1px solid var(--line-2);border-radius:999px;background:var(--card);font-size:.82rem;color:var(--muted);backdrop-filter:blur(8px)}
+.badge b{background:var(--grad);color:#fff;padding:3px 10px;border-radius:999px;font-weight:600;font-size:.74rem}
+.live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 var(--green);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.hero h1{font-size:clamp(2.6rem,7.4vw,5.8rem);line-height:1.02;letter-spacing:-.045em;font-weight:700;margin:26px auto 22px;max-width:980px}
+.hero h1 .serif{font-weight:400;letter-spacing:-.02em}
+.hero p.lead{font-size:clamp(1.02rem,1.8vw,1.22rem);color:var(--muted);max-width:680px;margin:0 auto}
+.hero-ctas{display:flex;gap:12px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:14px;font-weight:600;font-size:.95rem;transition:transform .2s,box-shadow .2s;border:1px solid var(--line-2)}
+.btn.primary{background:var(--grad);color:#fff;border:0;box-shadow:0 10px 30px -10px var(--violet)}
+.btn.ghost{background:var(--card);backdrop-filter:blur(10px)}
+.btn:hover{transform:translateY(-2px)}
+.byline{margin-top:28px;font-size:.85rem;color:var(--faint)}
+.byline span{color:var(--muted)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:22px;overflow:hidden;margin-top:64px}
+.stat{background:var(--bg-2);padding:26px 22px;text-align:left}
+.stat .n{font-size:clamp(2rem,4vw,2.9rem);font-weight:700;letter-spacing:-.04em;line-height:1}
+.stat .l{color:var(--muted);font-size:.86rem;margin-top:8px}
+
+/* marquee */
+.marquee{margin-top:56px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.track{display:flex;gap:12px;width:max-content;animation:scroll 40s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.chip{padding:9px 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:.88rem;color:var(--muted);white-space:nowrap}
+.chip i{font-style:normal;margin-right:6px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:110px 0 20px}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:"Geist Mono",monospace;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.kicker::before{content:"";width:22px;height:1px;background:currentColor}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:40px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(2rem,4.6vw,3.4rem);line-height:1.05;letter-spacing:-.035em;font-weight:700;margin-top:14px;max-width:700px}
+.sec-head p{color:var(--muted);max-width:420px}
+
+/* cards */
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;overflow:hidden;backdrop-filter:blur(10px);transition:border-color .3s,transform .3s}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(139,92,246,.14),transparent 40%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover::before{opacity:1}
+.card:hover{border-color:var(--line-2)}
+.card h3{font-size:1.2rem;letter-spacing:-.02em;font-weight:600;margin-bottom:8px}
+.card p{color:var(--muted);font-size:.94rem}
+.icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:var(--card-2);border:1px solid var(--line);margin-bottom:18px}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.b-2{grid-column:span 2}.b-3{grid-column:span 3}.b-4{grid-column:span 4}.b-6{grid-column:span 6}
+.rank{list-style:none;padding:0;margin-top:14px;counter-reset:r}
+.rank li{counter-increment:r;display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.rank li:last-child{border:0}
+.rank li::before{content:counter(r,decimal-leading-zero);font-family:"Geist Mono",monospace;font-size:.75rem;color:var(--faint);width:22px}
+.bar{flex:1;height:4px;border-radius:9px;background:var(--line);overflow:hidden;max-width:120px;margin-left:auto}
+.bar i{display:block;height:100%;background:var(--grad);width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.flow span{padding:10px 16px;border-radius:12px;background:var(--card-2);border:1px solid var(--line-2);font-weight:600;font-size:.92rem}
+.flow em{font-style:normal;color:var(--faint)}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:999px;letter-spacing:.02em;white-space:nowrap}
+.t-flag{background:rgba(245,165,36,.14);color:var(--amber)}
+.t-local{background:rgba(45,212,191,.13);color:var(--teal)}
+.t-gate{background:rgba(251,113,133,.13);color:var(--rose)}
+.t-new{background:rgba(139,92,246,.15);color:var(--violet)}
+
+.comp{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.comp .card{padding:22px}
+.comp .who{font-family:"Geist Mono",monospace;font-size:.72rem;color:var(--faint);margin-top:14px;text-transform:uppercase;letter-spacing:.06em}
+
+/* sitemap explorer */
+.explorer{border:1px solid var(--line);border-radius:26px;background:var(--card);backdrop-filter:blur(12px);overflow:hidden}
+.ex-bar{display:flex;gap:10px;align-items:center;padding:14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.search{flex:1;min-width:200px;display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg-2)}
+.search input{flex:1;border:0;background:transparent;color:var(--ink);font:inherit;font-size:.92rem;outline:none}
+.search kbd{font-family:"Geist Mono",monospace;font-size:.7rem;color:var(--faint);border:1px solid var(--line);padding:2px 6px;border-radius:6px}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{font:inherit;font-size:.82rem;padding:8px 13px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:.2s}
+.filters button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.col{background:var(--bg-2);padding:22px;min-height:120px}
+.col-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.col-h h4{font-size:1rem;font-weight:600;display:flex;align-items:center;gap:10px}
+.col-h h4 i{font-style:normal;font-size:18px}
+.col-h .cnt{font-family:"Geist Mono",monospace;font-size:.72rem;color:var(--faint)}
+.col .root{font-family:"Geist Mono",monospace;font-size:.74rem;color:var(--teal);margin-bottom:10px;display:block}
+.pg{display:flex;flex-direction:column;gap:3px;padding:10px 12px;margin:0 -12px;border-radius:12px;transition:background .2s}
+.pg:hover{background:var(--card-2)}
+.pg .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pg .nm{font-size:.92rem;font-weight:500}
+.pg .u{font-family:"Geist Mono",monospace;font-size:.72rem;color:var(--faint);word-break:break-all}
+.pg.child{padding-left:26px;position:relative}
+.pg.child::before{content:"";position:absolute;left:14px;top:0;bottom:50%;width:8px;border-left:1px solid var(--line-2);border-bottom:1px solid var(--line-2);border-bottom-left-radius:6px}
+.grp{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:14px 0 4px}
+.ex-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.ex-foot .legend{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.empty{padding:40px;text-align:center;color:var(--muted);grid-column:1/-1;background:var(--bg-2)}
+.langs{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.lang{flex:1;min-width:180px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.lang .ph{font-family:"Geist Mono",monospace;font-size:.72rem;color:var(--faint)}
+.lang .codes{font-size:1.05rem;font-weight:600;margin-top:4px}
+
+/* browser mock */
+.browser{border:1px solid var(--line-2);border-radius:20px;overflow:hidden;background:var(--bg-2);box-shadow:var(--shadow)}
+.b-top{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.b-dots{display:flex;gap:6px}.b-dots i{width:11px;height:11px;border-radius:50%;background:var(--line-2)}
+.b-dots i:nth-child(1){background:#ff5f57}.b-dots i:nth-child(2){background:#febc2e}.b-dots i:nth-child(3){background:#28c840}
+.b-url{flex:1;max-width:420px;margin:0 auto;text-align:center;font-family:"Geist Mono",monospace;font-size:.76rem;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:5px 10px}
+.promo{background:var(--grad);color:#fff;font-size:.8rem;text-align:center;padding:8px 12px;font-weight:500}
+.sitenav{display:flex;align-items:center;gap:22px;padding:16px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sitenav nav{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+.sitenav nav button{font:inherit;font-size:.88rem;color:var(--muted);background:none;border:0;padding:7px 11px;border-radius:9px;cursor:pointer}
+.sitenav nav button:hover,.sitenav nav button.open{color:var(--ink);background:var(--card-2)}
+.sitenav .apply{background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:10px;font-size:.85rem;font-weight:600}
+.util{display:flex;gap:8px;font-size:.78rem;color:var(--muted)}
+.mega{display:grid;grid-template-columns:repeat(4,1fr) 1.3fr;gap:18px;padding:24px 22px;border-bottom:1px solid var(--line);background:var(--card);animation:drop .35s ease}
+@keyframes drop{from{opacity:0;transform:translateY(-6px)}}
+.mega h5{font-family:"Geist Mono",monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;font-weight:500}
+.mega a{display:block;font-size:.9rem;padding:5px 0;color:var(--ink)}
+.mega a:hover{color:var(--violet)}
+.feature{border-radius:14px;padding:18px;background:var(--grad);color:#fff}
+.feature small{opacity:.85;font-size:.75rem}
+.feature b{display:block;font-size:1.05rem;margin:6px 0 10px;line-height:1.3}
+.feature span{font-size:.8rem;background:rgba(255,255,255,.2);padding:6px 10px;border-radius:8px;display:inline-block}
+.mega-hint{padding:14px 22px;font-size:.8rem;color:var(--faint)}
+
+/* templates */
+.tpl{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+.wire{display:flex;flex-direction:column;gap:8px;padding:18px}
+.blk{border:1px dashed var(--line-2);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;transition:.25s;cursor:default}
+.blk:hover{border-style:solid;border-color:var(--violet);background:var(--card-2);transform:translateX(4px)}
+.blk .no{font-family:"Geist Mono",monospace;font-size:.7rem;color:var(--faint);width:20px}
+.blk b{font-size:.9rem;font-weight:600}
+.blk span{font-size:.82rem;color:var(--muted);margin-left:auto;text-align:right}
+.blk.hero-b{min-height:78px;background:linear-gradient(120deg,rgba(45,212,191,.1),rgba(139,92,246,.12));border-style:solid;border-color:var(--line-2)}
+.glance{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}
+.glance div{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg-2)}
+.glance small{display:block;font-size:.7rem;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+.glance b{font-size:.92rem}
+.steps{list-style:none;padding:0}
+.steps li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.steps li:last-child{border:0}
+.steps li::before{content:"✦";color:var(--violet)}
+.schema{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.schema code{font-family:"Geist Mono",monospace;font-size:.76rem;padding:6px 10px;border-radius:8px;background:var(--bg-2);border:1px solid var(--line);color:var(--teal)}
+
+/* clusters */
+.clusters{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.cluster{display:flex;flex-direction:column}
+.cluster .num{font-family:"Instrument Serif",serif;font-style:italic;font-size:2.6rem;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cluster h3{margin-top:14px;font-size:1.05rem}
+.cluster ul{list-style:none;padding:0;margin:12px 0 16px;flex:1}
+.cluster li{font-size:.85rem;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--line)}
+.cluster li:last-child{border:0}
+.cluster .to{font-family:"Geist Mono",monospace;font-size:.7rem;color:var(--teal)}
+.kw{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.kw span{font-size:.82rem;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);transition:.2s}
+.kw span:hover{color:var(--ink);border-color:var(--violet)}
+
+/* roadmap */
+.road{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-top:30px}
+.road::before{content:"";position:absolute;top:8px;left:0;right:0;height:2px;background:var(--line)}
+.road .fill{position:absolute;top:8px;left:0;height:2px;width:0;background:var(--grad);transition:width 1.8s cubic-bezier(.2,.8,.2,1)}
+.phase{position:relative}
+.phase::before{content:"";position:absolute;top:-28px;left:26px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--violet);box-shadow:0 0 0 5px rgba(139,92,246,.15)}
+.phase .wk{font-family:"Geist Mono",monospace;font-size:.72rem;color:var(--teal);letter-spacing:.08em}
+.phase h3{margin:6px 0 12px}
+.phase ul{list-style:none;padding:0}
+.phase li{font-size:.88rem;padding:6px 0;color:var(--muted);display:flex;gap:8px}
+.phase li::before{content:"→";color:var(--faint)}
+
+/* compliance */
+.gates{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.gate-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.gate-item:last-child{border:0}
+.gate-item .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:none;font-size:14px}
+.hold .ic{background:rgba(251,113,133,.14);color:var(--rose)}
+.must .ic{background:rgba(52,211,153,.14);color:var(--green)}
+.gate-item b{display:block;font-size:.95rem}
+.gate-item span{font-size:.86rem;color:var(--muted)}
+
+/* approval */
+.approve{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.ring-wrap{display:flex;align-items:center;gap:20px;margin-bottom:12px}
+.ring{width:84px;height:84px;flex:none}
+.ring circle{fill:none;stroke-width:8}
+.ring .bg{stroke:var(--line)}
+.ring .fg{stroke:url(#rg);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .5s cubic-bezier(.2,.8,.2,1)}
+.ring text{fill:var(--ink);font:600 18px Geist,sans-serif}
+.chk{display:flex;align-items:center;gap:14px;padding:13px 14px;margin:0 -14px;border-radius:12px;cursor:pointer;transition:background .2s;font-size:.95rem}
+.chk:hover{background:var(--card-2)}
+.chk input{position:absolute;opacity:0;pointer-events:none}
+.box{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--line-2);display:grid;place-items:center;flex:none;transition:.2s;color:transparent;font-size:13px}
+.chk input:checked+.box{background:var(--grad);border-color:transparent;color:#fff}
+.chk input:focus-visible+.box{outline:2px solid var(--violet);outline-offset:2px}
+.chk input:checked~.txt{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--faint)}
+.needs li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.9rem;list-style:none}
+.needs{padding:0;margin-top:10px}
+.needs li:last-child{border:0}
+.sig{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sig div{border-bottom:1px solid var(--line-2);height:44px;display:flex;align-items:flex-end;font-size:.75rem;color:var(--faint);padding-bottom:4px}
+.done-msg{display:none;margin-top:16px;padding:14px;border-radius:14px;background:rgba(52,211,153,.12);color:var(--green);font-weight:600;font-size:.92rem;text-align:center}
+.done-msg.show{display:block;animation:drop .4s ease}
+
+/* closing */
+.closing{margin:110px 0 0;padding:70px 30px;border-radius:30px;text-align:center;position:relative;overflow:hidden;border:1px solid var(--line-2);background:radial-gradient(ellipse at top,rgba(139,92,246,.22),transparent 60%),radial-gradient(ellipse at bottom right,rgba(45,212,191,.18),transparent 60%),var(--card)}
+.closing h2{font-size:clamp(2rem,5vw,3.6rem);letter-spacing:-.04em;line-height:1.05}
+.closing p{color:var(--muted);margin:16px auto 28px;max-width:520px}
+footer{padding:50px 0 60px;color:var(--faint);font-size:.82rem;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* responsive */
+@media (max-width:980px){
+  .links{display:none}
+  .nav{justify-content:space-between}
+  .bento{grid-template-columns:1fr 1fr}
+  .b-2,.b-3,.b-4,.b-6{grid-column:span 2}
+  .comp{grid-template-columns:1fr 1fr}
+  .ex-grid{grid-template-columns:1fr 1fr}
+  .clusters{grid-template-columns:1fr 1fr}
+  .mega{grid-template-columns:1fr 1fr}
+  .tpl,.approve{grid-template-columns:1fr}
+  .road{grid-template-columns:1fr 1fr;row-gap:44px}
+  .road::before,.road .fill{display:none}
+}
+@media (max-width:620px){
+  .hero{padding-top:130px}
+  .stats{grid-template-columns:1fr 1fr}
+  .comp,.ex-grid,.clusters,.gates,.mega,.road,.glance{grid-template-columns:1fr}
+  .pill-cta{display:none}
+  .card{padding:20px}
+  .sitenav nav{display:none}
+  .blk span{display:none}
+}
+@media print{
+  .nav,.aurora,.dots,.progress-top,.ex-bar,.hero-ctas,.marquee{display:none!important}
+  .reveal{opacity:1;transform:none}
+  section{break-inside:avoid-page;padding-top:40px}
+}
+</style>
+</head>
+<body>
+<div class="progress-top" id="prog"></div>
+<div class="aurora"><i></i><i></i><i></i></div>
+<div class="dots"></div>
+
+<!-- NAV -->
+<header class="nav">
+  <a href="#top" class="brand"><span class="mark">A</span>ALC English</a>
+  <nav class="links" id="links">
+    <a href="#market">Market</a>
+    <a href="#sitemap">Sitemap</a>
+    <a href="#navigation">Navigation</a>
+    <a href="#templates">Templates</a>
+    <a href="#content">Content</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#compliance">Compliance</a>
+  </nav>
+  <button class="icon-btn" id="theme" type="button" aria-label="Toggle light and dark mode">☀</button>
+  <a href="#approval" class="pill-cta">Review &amp; Approve →</a>
+</header>
+
+<main class="wrap" id="top">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge reveal"><b>Proposal v2</b><span class="live"></span> Website Blueprint · September 2026</div>
+    <h1 class="reveal">The website that turns <span class="serif grad-text">KL's English learners</span> into ALC students.</h1>
+    <p class="lead reveal">A complete structure for ALC English: sitemap, navigation, page templates, content engine and a 12-week launch roadmap, built on real course demand and on what top Kuala Lumpur language centres already do well.</p>
+    <div class="hero-ctas reveal">
+      <a href="#sitemap" class="btn primary">Explore the sitemap ↓</a>
+      <a href="#approval" class="btn ghost">Jump to approval</a>
+    </div>
+    <div class="byline reveal">Prepared by <span>Qurat-ul-ain Wahaj</span> · Senior SEO Executive &amp; Digital Marketing Strategist</div>
+
+    <div class="stats reveal">
+      <div class="stat"><div class="n grad-text" data-count="50" data-suffix="">50</div><div class="l">Pages at full build</div></div>
+      <div class="stat"><div class="n" data-count="13">13</div><div class="l">Courses in 4 goal groups</div></div>
+      <div class="stat"><div class="n" data-count="5">5</div><div class="l">Content clusters</div></div>
+      <div class="stat"><div class="n" data-count="7">7</div><div class="l">Languages, 3 phases</div></div>
+    </div>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="track" id="track"></div>
+    </div>
+  </div>
+
+  <!-- 01 MARKET -->
+  <section id="market">
+    <div class="sec-head reveal">
+      <div><span class="kicker">01 · Market Intelligence</span><h2>Demand is clear. <span class="serif grad-text">The path sells.</span></h2></div>
+      <p>International students don't buy a course. They buy a route from where their English is today to a university seat. ALC's site is built around that route.</p>
+    </div>
+
+    <div class="bento">
+      <div class="card b-3 reveal">
+        <div class="icon">📈</div>
+        <h3>Course priority · international</h3>
+        <ol class="rank" id="rank">
+          <li>Intensive English <span class="tag t-flag">Flagship</span><span class="bar"><i data-w="100"></i></span></li>
+          <li>IELTS Preparation<span class="bar"><i data-w="92"></i></span></li>
+          <li>Academic English<span class="bar"><i data-w="78"></i></span></li>
+          <li>University Pathway<span class="bar"><i data-w="74"></i></span></li>
+          <li>Speaking &amp; Communication<span class="bar"><i data-w="66"></i></span></li>
+          <li>Business English<span class="bar"><i data-w="52"></i></span></li>
+          <li>TOEFL Preparation<span class="bar"><i data-w="38"></i></span></li>
+          <li>Short-Term Camps<span class="bar"><i data-w="32"></i></span></li>
+        </ol>
+      </div>
+      <div class="card b-3 reveal">
+        <div class="icon">🧭</div>
+        <h3>The winning offer</h3>
+        <p>One clear progression that answers the student's real goal, and the backbone of every page and CTA on the site.</p>
+        <div class="flow"><span>Intensive English</span><em>→</em><span>IELTS</span><em>→</em><span>University</span></div>
+        <div style="margin-top:26px">
+          <h3>Added for the local market <span class="tag t-new">New</span></h3>
+          <p>The source research covered international students only. These add a steady revenue stream from Malaysian learners.</p>
+          <div class="flow">
+            <span style="font-weight:500">MUET Prep</span><span style="font-weight:500">Corporate (HRD Corp)</span><span style="font-weight:500">Kids &amp; Teens</span><span style="font-weight:500">Online</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin:44px 0 18px" class="reveal"><span class="kicker">Competitor patterns worth adopting</span></div>
+    <div class="comp">
+      <div class="card reveal"><div class="icon">🎯</div><h3>Goal-based menus</h3><p>Courses grouped by what learners want: University, Career, Test Prep, Special.</p><div class="who">ELS Malaysia</div></div>
+      <div class="card reveal"><div class="icon">🧪</div><h3>Free placement test</h3><p>Top-level nav item and the #1 lead magnet in this market.</p><div class="who">Cambright · Stratford</div></div>
+      <div class="card reveal"><div class="icon">🌏</div><h3>Multilingual chat</h3><p>Separate WhatsApp and WeChat lines per language, plus translated sites.</p><div class="who">Cambright · ELS</div></div>
+      <div class="card reveal"><div class="icon">🛂</div><h3>Visa + intake in header</h3><p>Student visa guide and intake calendar one click from anywhere.</p><div class="who">Stratford · Cambright</div></div>
+      <div class="card reveal"><div class="icon">🏛️</div><h3>Licence on display</h3><p>Ministry of Education licence number shown publicly as a trust signal.</p><div class="who">Stratford</div></div>
+      <div class="card reveal"><div class="icon">🔀</div><h3>Split apply paths</h3><p>Separate flows for international and Malaysian students, plus payment options.</p><div class="who">ELS Malaysia</div></div>
+      <div class="card reveal"><div class="icon">🚇</div><h3>Transit-led location</h3><p>Campus sold through MRT and LRT walking times, not just an address.</p><div class="who">Cambright · Stratford</div></div>
+      <div class="card reveal"><div class="icon">🤝</div><h3>University MOUs</h3><p>Named university partners that back up the pathway promise.</p><div class="who">ELS · Cambright</div></div>
+    </div>
+  </section>
+
+  <!-- 02 SITEMAP -->
+  <section id="sitemap">
+    <div class="sec-head reveal">
+      <div><span class="kicker">02 · Information Architecture</span><h2>Every page, <span class="serif grad-text">mapped.</span></h2></div>
+      <p>Search any page or filter by priority. Short, keyword-led URLs, with hubs feeding child pages so link equity flows where it earns revenue.</p>
+    </div>
+
+    <div class="explorer reveal">
+      <div class="ex-bar">
+        <label class="search"><span>⌕</span><input id="q" type="search" placeholder="Search pages or URLs… e.g. ielts, visa" aria-label="Search pages"><kbd>/</kbd></label>
+        <div class="filters" id="filters">
+          <button type="button" class="on" data-f="all">All</button>
+          <button type="button" data-f="flag">★ Priority</button>
+          <button type="button" data-f="local">Local</button>
+          <button type="button" data-f="gate">Gated</button>
+        </div>
+      </div>
+      <div class="ex-grid" id="exgrid"></div>
+      <div class="ex-foot">
+        <div class="legend">
+          <span class="tag t-flag">★ Priority</span> Build first
+          <span class="tag t-local">Local</span> Malaysian demand
+          <span class="tag t-gate">Gated</span> Publish after approval
+        </div>
+        <div><b id="shown">0</b> pages shown</div>
+      </div>
+    </div>
+
+    <div class="langs reveal">
+      <div class="lang"><div class="ph">PHASE 1 · LAUNCH +6 WKS</div><div class="codes">/ar/ &nbsp;/zh/</div></div>
+      <div class="lang"><div class="ph">PHASE 2</div><div class="codes">/ru/ &nbsp;/id/ &nbsp;/ko/</div></div>
+      <div class="lang"><div class="ph">PHASE 3</div><div class="codes">/ja/ &nbsp;/th/</div></div>
+      <div class="lang"><div class="ph">SETUP</div><div class="codes" style="font-size:.92rem;font-weight:500">Subfolders + hreflang</div></div>
+    </div>
+  </section>
+
+  <!-- 03 NAVIGATION -->
+  <section id="navigation">
+    <div class="sec-head reveal">
+      <div><span class="kicker">03 · Navigation</span><h2>Six clicks to <span class="serif grad-text">anywhere.</span></h2></div>
+      <p>This is a live preview. Click the menu items to open the mega-menus, which are organised by learner goal.</p>
+    </div>
+
+    <div class="browser reveal">
+      <div class="b-top"><div class="b-dots"><i></i><i></i><i></i></div><div class="b-url">🔒 alcenglish.my</div><div style="width:45px"></div></div>
+      <div class="promo">🎓 October intake open. Enrol in 5 months of Intensive English, get 1 month free →</div>
+      <div class="sitenav">
+        <div class="brand"><span class="mark">A</span>ALC English</div>
+        <nav id="mnav">
+          <button type="button" data-m="courses" class="open">Courses ▾</button>
+          <button type="button" data-m="intl">International ▾</button>
+          <button type="button" data-m="none">Placement Test</button>
+          <button type="button" data-m="none">Intake Calendar</button>
+          <button type="button" data-m="none">Fees</button>
+          <button type="button" data-m="about">About ▾</button>
+        </nav>
+        <div class="util">EN ▾ · 💬</div>
+        <span class="apply">Apply Now</span>
+      </div>
+      <div id="megaWrap"></div>
+      <div class="mega-hint">Footer: Courses · International hub · Address, MRT access, hours · MOE licence no. · Sdn Bhd name · PDPA, Terms, Refund</div>
+    </div>
+  </section>
+
+  <!-- 04 TEMPLATES -->
+  <section id="templates">
+    <div class="sec-head reveal">
+      <div><span class="kicker">04 · Page Templates</span><h2>Designed to <span class="serif grad-text">convert.</span></h2></div>
+      <p>Two master templates cover most of the site. Each section has one job: build trust or move the visitor to the placement test and WhatsApp.</p>
+    </div>
+
+    <div class="tpl">
+      <div class="card reveal" style="padding:0">
+        <div class="b-top"><div class="b-dots"><i></i><i></i><i></i></div><div class="b-url">alcenglish.my/</div><div style="width:45px"></div></div>
+        <div class="wire">
+          <div class="blk hero-b"><span class="no">01</span><b>Hero</b><span>"English Courses in Kuala Lumpur" · Test + WhatsApp</span></div>
+          <div class="blk"><span class="no">02</span><b>Proof strip</b><span>Students · nationalities · licence</span></div>
+          <div class="blk"><span class="no">03</span><b>"I'm looking for…"</b><span>4 goal cards</span></div>
+          <div class="blk"><span class="no">04</span><b>Flagship courses</b><span>Intensive · IELTS · Pathway</span></div>
+          <div class="blk"><span class="no">05</span><b>Why ALC</b><span>Teachers · location · visa · partners</span></div>
+          <div class="blk"><span class="no">06</span><b>Student reviews</b><span>With country flags</span></div>
+          <div class="blk"><span class="no">07</span><b>Location</b><span>Map + MRT walking times</span></div>
+          <div class="blk"><span class="no">08</span><b>Next intakes</b><span>Live from calendar + offer</span></div>
+          <div class="blk"><span class="no">09</span><b>FAQ</b><span>FAQPage schema · AI-quotable</span></div>
+          <div class="blk"><span class="no">10</span><b>Contact</b><span>Form + WhatsApp per language</span></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <span class="tag t-new">Reused on all 13 courses</span>
+        <h3 style="margin-top:14px">Course page blueprint</h3>
+        <p>An at-a-glance box answers the big questions before the visitor scrolls. Snippets and AI assistants lift this box directly.</p>
+        <div class="glance">
+          <div><small>Duration</small><b>4–48 weeks</b></div>
+          <div><small>Hours / week</small><b>20–25</b></div>
+          <div><small>Levels</small><b>CEFR A1–C1</b></div>
+          <div><small>Next intake</small><b>Every Monday</b></div>
+          <div><small>Fee from</small><b>RM ___ / week</b></div>
+          <div><small>Visa eligible</small><b>Yes / No</b></div>
+        </div>
+        <ul class="steps">
+          <li>Who it's for: 3–5 learner profiles</li>
+          <li>Outcomes mapped by CEFR level</li>
+          <li>Sample weekly timetable</li>
+          <li>Fees, inclusions and entry requirements</li>
+          <li>Progression path to the next course</li>
+          <li>6–8 answer-first FAQs</li>
+          <li>Sticky CTA: Placement Test + WhatsApp</li>
+        </ul>
+        <div class="schema"><code>Course</code><code>FAQPage</code><code>EducationalOrganization</code><code>LocalBusiness</code><code>BreadcrumbList</code><code>Article</code></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 CONTENT -->
+  <section id="content">
+    <div class="sec-head reveal">
+      <div><span class="kicker">05 · Content Engine</span><h2>Five pillars. <span class="serif grad-text">Total authority.</span></h2></div>
+      <p>Each pillar guide is backed by cluster posts linking to the matching course pages. Google gets topical depth, and AI assistants get clear answers to cite.</p>
+    </div>
+    <div class="clusters">
+      <div class="card cluster reveal"><div class="num">01</div><h3>Study English in Malaysia</h3><ul><li>Monthly cost of studying in KL</li><li>Malaysia vs Philippines vs UK</li><li>Best areas near MRT</li></ul><div class="to">→ Intensive · Fees</div></div>
+      <div class="card cluster reveal"><div class="num">02</div><h3>IELTS in Malaysia</h3><ul><li>Test centres &amp; fees in KL</li><li>Band scores unis require</li><li>Speaking Part 2 tips</li></ul><div class="to">→ IELTS pages</div></div>
+      <div class="card cluster reveal"><div class="num">03</div><h3>University Entry</h3><ul><li>EMGS English rules explained</li><li>IELTS vs MUET vs pathway</li><li>English for medicine / engineering</li></ul><div class="to">→ Pathway · Academic</div></div>
+      <div class="card cluster reveal"><div class="num">04</div><h3>Student Life in KL</h3><ul><li>Halal food near campus</li><li>Can language students work?</li><li>First-week checklist</li></ul><div class="to">→ International hub</div></div>
+      <div class="card cluster reveal"><div class="num">05</div><h3>Workplace English</h3><ul><li>HRD Corp claimable, explained</li><li>Business email phrases</li><li>Interview English</li></ul><div class="to">→ Business · Corporate</div></div>
+    </div>
+    <div class="reveal" style="margin-top:34px"><span class="kicker">Target keywords · volumes to be validated</span></div>
+    <div class="kw reveal">
+      <span>english courses in malaysia for international students</span><span>intensive english programme malaysia</span><span>study english in malaysia</span><span>english language centre kuala lumpur</span><span>ielts preparation course malaysia</span><span>academic english course malaysia</span><span>university pathway english malaysia</span><span>english speaking course kl</span><span>affordable english courses malaysia</span><span>learn english before university in malaysia</span><span>muet class kl</span><span>hrd corp english training</span>
+    </div>
+  </section>
+
+  <!-- 06 ROADMAP -->
+  <section id="roadmap">
+    <div class="sec-head reveal">
+      <div><span class="kicker">06 · Launch Roadmap</span><h2>Live in <span class="serif grad-text">12 weeks.</span></h2></div>
+      <p>Revenue pages first, trust second, authority third. Gated pages go live the week their approval lands.</p>
+    </div>
+    <div class="road" id="road">
+      <div class="fill" id="roadFill"></div>
+      <div class="card phase reveal"><div class="wk">WEEKS 01–03</div><h3>Core launch</h3><ul><li>Home</li><li>Intensive English</li><li>IELTS Preparation</li><li>Placement Test</li><li>Fees · Contact</li></ul></div>
+      <div class="card phase reveal"><div class="wk">WEEKS 04–06</div><h3>Trust &amp; conversion</h3><ul><li>Speaking Course</li><li>Intake Calendar</li><li>About · Licensing</li><li>Campus</li><li>Apply flows</li></ul></div>
+      <div class="card phase reveal"><div class="wk">WEEKS 07–09</div><h3>Authority</h3><ul><li>Pillar guides 01 &amp; 02</li><li>Academic English</li><li>Arabic + Chinese top 5</li></ul></div>
+      <div class="card phase reveal"><div class="wk">WEEKS 10–12</div><h3>Expansion</h3><ul><li>1 cluster post / week</li><li>Top-2 country pages</li><li>Gated pages as approved</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 07 COMPLIANCE -->
+  <section id="compliance">
+    <div class="sec-head reveal">
+      <div><span class="kicker">07 · Compliance Gates</span><h2>Trust is <span class="serif grad-text">the product.</span></h2></div>
+      <p>We only publish claims we can back up. That protects ALC's licence and builds the credibility that converts.</p>
+    </div>
+    <div class="gates">
+      <div class="card hold reveal">
+        <span class="tag t-gate">Hold until confirmed</span>
+        <div class="gate-item" style="margin-top:10px"><div class="ic">⏸</div><div><b>Student visa support</b><span>Needs MOE registration and MOHA approval to enrol international students.</span></div></div>
+        <div class="gate-item"><div class="ic">⏸</div><div><b>"No IELTS needed" pathway</b><span>Only with signed university MOUs, and each partner named.</span></div></div>
+        <div class="gate-item"><div class="ic">⏸</div><div><b>HRD Corp claimable</b><span>Only after training-provider registration.</span></div></div>
+        <div class="gate-item"><div class="ic">⏸</div><div><b>Student Pass validity</b><span>Sources conflict (6 vs 12 months). Confirm with EMGS first.</span></div></div>
+      </div>
+      <div class="card must reveal">
+        <span class="tag t-local">Must state clearly</span>
+        <div class="gate-item" style="margin-top:10px"><div class="ic">✓</div><div><b>No part-time work</b><span>Language-centre Student Pass holders cannot work in Malaysia.</span></div></div>
+        <div class="gate-item"><div class="ic">✓</div><div><b>Check university requirements</b><span>Students confirm English entry rules with each university.</span></div></div>
+        <div class="gate-item"><div class="ic">✓</div><div><b>Licence in footer</b><span>MOE licence number and operating Sdn Bhd name, sitewide.</span></div></div>
+        <div class="gate-item"><div class="ic">✓</div><div><b>Refund policy</b><span>International applicants look for it before they pay.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 APPROVAL -->
+  <section id="approval">
+    <div class="sec-head reveal">
+      <div><span class="kicker">08 · Sign-off</span><h2>Ready for <span class="serif grad-text">your green light.</span></h2></div>
+      <p>Tick each item as it's agreed. Ticks aren't saved, so print this page or take a screenshot to keep a record.</p>
+    </div>
+    <div class="approve">
+      <div class="card reveal">
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 84 84" aria-hidden="true">
+            <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2dd4bf"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+            <circle class="bg" cx="42" cy="42" r="36"/>
+            <circle class="fg" id="ringFg" cx="42" cy="42" r="36" stroke-dasharray="226.2" stroke-dashoffset="226.2"/>
+            <text x="42" y="48" text-anchor="middle" id="ringTxt">0/7</text>
+          </svg>
+          <div><h3>Approval checklist</h3><p>Seven decisions to finalise before build starts.</p></div>
+        </div>
+        <div id="checks">
+          <label class="chk"><input type="checkbox"><span class="box">✓</span><span class="txt">Sitemap and URL structure</span></label>
+          <label class="chk"><input type="checkbox"><span class="box">✓</span><span class="txt">Course list: 13 courses in 4 goal groups</span></label>
+          <label class="chk"><input type="checkbox"><span class="box">✓</span><span class="txt">Main navigation and mega-menus</span></label>
+          <label class="chk"><input type="checkbox"><span class="box">✓</span><span class="txt">Homepage and course page templates</span></label>
+          <label class="chk"><input type="checkbox"><span class="box">✓</span><span class="txt">Language rollout, Arabic + Chinese first</span></label>
+          <label class="chk"><input type="checkbox"><span class="box">✓</span><span class="txt">12-week build and content roadmap</span></label>
+          <label class="chk"><input type="checkbox"><span class="box">✓</span><span class="txt">Show fees publicly ("from RM__/week")</span></label>
+        </div>
+        <div class="done-msg" id="done">✦ All approved. Ready to start the build.</div>
+      </div>
+      <div class="card reveal">
+        <h3>Inputs needed from management</h3>
+        <ul class="needs">
+          <li>Logo &amp; brand colours <span class="tag t-flag">Wk 1</span></li>
+          <li>MOE licence no. &amp; MOHA status <span class="tag t-flag">Wk 1</span></li>
+          <li>Confirmed fees &amp; intake dates <span class="tag t-flag">Wk 1</span></li>
+          <li>Campus address &amp; photos <span class="tag t-local">Wk 2</span></li>
+          <li>WhatsApp numbers per language <span class="tag t-local">Wk 2</span></li>
+          <li>University partners, signed or in progress <span class="tag t-gate">Wk 6</span></li>
+        </ul>
+        <div class="sig"><div>Approved by</div><div>Date</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <div class="closing reveal">
+    <span class="kicker" style="justify-content:center">Next step</span>
+    <h2 style="margin-top:14px">Approve the blueprint.<br><span class="serif grad-text">We start building Monday.</span></h2>
+    <p>Once approved, week one delivers the homepage, Intensive English and IELTS pages, and the placement test.</p>
+    <a href="#approval" class="btn primary">Go to sign-off ↑</a>
+  </div>
+
+  <footer>
+    <div><b style="color:var(--muted)">ALC English</b> · Website Blueprint · Kuala Lumpur · September 2026</div>
+    <div>Prepared by Qurat-ul-ain Wahaj · Competitor observations from public sites of ELS Malaysia, Stratford &amp; Cambright, Sept 2026</div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var root=document.documentElement;
+
+  /* theme */
+  var tb=document.getElementById('theme');
+  var setIcon=function(){tb.textContent=root.getAttribute('data-theme')==='dark'?'☀':'☾';};
+  try{ if(window.matchMedia('(prefers-color-scheme: light)').matches) root.setAttribute('data-theme','light'); }catch(e){}
+  setIcon();
+  tb.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');setIcon();});
+
+  /* marquee */
+  var courses=[['📘','Intensive English'],['📝','IELTS Preparation'],['🎓','University Pathway'],['📚','Academic English'],['🗣️','Speaking Course'],['💼','Business English'],['🧾','TOEFL'],['🇲🇾','MUET'],['🏢','Corporate Training'],['🏕️','Holiday Camp'],['🧒','Kids & Teens'],['💻','Online Classes']];
+  var html=courses.map(function(c){return '<span class="chip"><i>'+c[0]+'</i>'+c[1]+'</span>';}).join('');
+  document.getElementById('track').innerHTML=html+html;
+
+  /* sitemap data */
+  var S=[
+    {t:'Courses',i:'📚',r:'/courses/',g:[
+      {h:'University & Academic',p:[['Intensive English','/courses/intensive-english/','flag'],['University Pathway English','/courses/university-pathway-english/','gate'],['Academic English','/courses/academic-english/']]},
+      {h:'Exam Preparation',p:[['IELTS Preparation','/courses/ielts-preparation/','flag'],['IELTS Speaking','…/ielts-speaking/','','c'],['IELTS Writing','…/ielts-writing/','','c'],['IELTS for University Admission','…/ielts-for-university-admission/','','c'],['TOEFL Preparation','/courses/toefl-preparation/'],['MUET Preparation','/courses/muet-preparation/','local']]}
+    ]},
+    {t:'More Courses',i:'🧩',r:'/courses/',g:[
+      {h:'Communication & Career',p:[['English Speaking Course','/courses/english-speaking-course/','flag'],['Business English','/courses/business-english/'],['Corporate English Training','/courses/corporate-english-training/','gate']]},
+      {h:'Young Learners & Short Stays',p:[['Holiday English Camp','/courses/holiday-english-camp/'],['Kids & Teens English','/courses/kids-teens-english/','local']]},
+      {h:'Flexible',p:[['Online English Classes','/courses/online-english-classes/']]}
+    ]},
+    {t:'Conversion',i:'⚡',r:'top-level',g:[
+      {h:'',p:[['Home','/','flag'],['Free Placement Test','/placement-test/','flag'],['Intake Calendar','/intake-calendar/'],['Fees','/fees/','flag'],['Contact','/contact/','flag']]},
+      {h:'Apply',p:[['Apply · International','/apply/international-students/'],['Apply · Malaysian','/apply/malaysian-students/','local'],['Payment Options','/apply/payment-options/']]}
+    ]},
+    {t:'International Students',i:'🌏',r:'/international-students/',g:[
+      {h:'',p:[['Student Visa Malaysia (EMGS)','…/student-visa-malaysia/','gate'],['Why Study English in Malaysia','…/why-study-english-in-malaysia/'],['Cost of Living in KL','…/cost-of-living-kuala-lumpur/'],['Accommodation','…/accommodation/'],['Airport Pickup','…/airport-pickup/']]},
+      {h:'Country pages · top 4–5 markets',p:[['Saudi Arabia','…/countries/saudi-arabia/','','c'],['China','…/countries/china/','','c'],['Russia & CIS','…/countries/russia-cis/','','c'],['Indonesia','…/countries/indonesia/','','c']]}
+    ]},
+    {t:'Trust & Community',i:'🏛️',r:'various',g:[
+      {h:'About',p:[['About ALC English','/about/'],['Our Teachers','/about/our-teachers/','','c'],['Licensing & Accreditation','/about/licensing-accreditation/','','c'],['Campus & Location','/about/campus/','','c']]},
+      {h:'',p:[['Malaysian Students','/malaysian-students/','local'],['University Partners','/university-partners/','gate'],['Student Life','/student-life/'],['Student Reviews','/reviews/'],['FAQ','/faq/']]}
+    ]},
+    {t:'Blog & Legal',i:'✍️',r:'/blog/',g:[
+      {h:'Blog categories',p:[['Study in Malaysia','/blog/study-in-malaysia/'],['IELTS','/blog/ielts/'],['University Entry','/blog/university-entry/'],['Student Life in KL','/blog/student-life/'],['Workplace English','/blog/workplace-english/']]},
+      {h:'Legal · footer',p:[['Privacy Policy (PDPA)','/privacy-policy/'],['Terms & Conditions','/terms/'],['Refund Policy','/refund-policy/'],['HTML Sitemap','/sitemap/']]}
+    ]}
+  ];
+  var TAG={flag:'<span class="tag t-flag">★ Priority</span>',local:'<span class="tag t-local">Local</span>',gate:'<span class="tag t-gate">Gated</span>'};
+  var grid=document.getElementById('exgrid'),q=document.getElementById('q'),filter='all';
+  var esc=function(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');};
+  function render(){
+    var term=q.value.trim().toLowerCase(),total=0,out='';
+    S.forEach(function(sec){
+      var body='',n=0;
+      sec.g.forEach(function(g){
+        var rows='';
+        g.p.forEach(function(p){
+          var ok=(filter==='all'||p[2]===filter)&&(!term||(p[0]+' '+p[1]).toLowerCase().indexOf(term)>-1);
+          if(!ok)return; n++;
+          rows+='<div class="pg'+(p[3]?' child':'')+'"><div class="top"><span class="nm">'+esc(p[0])+'</span>'+(TAG[p[2]]||'')+'</div><span class="u">'+esc(p[1])+'</span></div>';
+        });
+        if(rows) body+=(g.h?'<div class="grp">'+esc(g.h)+'</div>':'')+rows;
+      });
+      if(!n)return; total+=n;
+      out+='<div class="col"><div class="col-h"><h4><i>'+sec.i+'</i>'+esc(sec.t)+'</h4><span class="cnt">'+n+'</span></div><span class="root">'+esc(sec.r)+'</span>'+body+'</div>';
+    });
+    grid.innerHTML=out||'<div class="empty">No pages match that search.</div>';
+    document.getElementById('shown').textContent=total;
+  }
+  q.addEventListener('input',render);
+  document.getElementById('filters').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    filter=b.getAttribute('data-f');
+    this.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});
+    render();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement!==q){e.preventDefault();q.focus();}});
+  render();
+
+  /* mega menu */
+  var M={
+    courses:'<div class="mega"><div><h5>University</h5><a>Intensive English</a><a>University Pathway</a><a>Academic English</a></div><div><h5>Test Prep</h5><a>IELTS Preparation</a><a>TOEFL Preparation</a><a>MUET Preparation</a></div><div><h5>Career</h5><a>Speaking Course</a><a>Business English</a><a>Corporate Training</a></div><div><h5>Special</h5><a>Holiday Camp</a><a>Kids &amp; Teens</a><a>Online Classes</a></div><div class="feature"><small>Not sure where to start?</small><b>Find your level in 15 minutes, free.</b><span>Take the placement test →</span></div></div>',
+    intl:'<div class="mega"><div><h5>Before you arrive</h5><a>Student Visa (EMGS)</a><a>Why Malaysia</a><a>Cost of Living</a></div><div><h5>Arrival</h5><a>Airport Pickup</a><a>Accommodation</a><a>Student Life</a></div><div><h5>Your country</h5><a>Saudi Arabia</a><a>China</a><a>Russia &amp; CIS</a></div><div><h5>Apply</h5><a>International Students</a><a>Payment Options</a><a>FAQ</a></div><div class="feature"><small>Talk in your language</small><b>العربية · 中文 · Русский advisors on WhatsApp</b><span>Chat now →</span></div></div>',
+    about:'<div class="mega"><div><h5>ALC English</h5><a>Our Story</a><a>Our Teachers</a></div><div><h5>Trust</h5><a>Licensing</a><a>University Partners</a></div><div><h5>Campus</h5><a>Location &amp; MRT</a><a>Student Life</a></div><div><h5>Voices</h5><a>Student Reviews</a><a>Blog</a></div><div class="feature"><small>Come and see us</small><b>Book a campus tour this week.</b><span>Book a visit →</span></div></div>'
+  };
+  var mw=document.getElementById('megaWrap'),mnav=document.getElementById('mnav');
+  mw.innerHTML=M.courses;
+  mnav.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    var k=b.getAttribute('data-m'),was=b.classList.contains('open');
+    mnav.querySelectorAll('button').forEach(function(x){x.classList.remove('open');});
+    if(M[k]&&!was){b.classList.add('open');mw.innerHTML=M[k];} else mw.innerHTML='';
+  });
+
+  /* reveal + counters + bars */
+  var countUp=function(el){var end=+el.getAttribute('data-count'),suf=el.getAttribute('data-suffix')||'',t0=null;
+    var step=function(t){if(!t0)t0=t;var p=Math.min((t-t0)/1400,1),v=Math.round(end*(1-Math.pow(1-p,3)));el.textContent=v+suf;if(p<1)requestAnimationFrame(step);};requestAnimationFrame(step);};
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+    if(!en.isIntersecting)return; var el=en.target; el.classList.add('in');
+    el.querySelectorAll('[data-count]').forEach(countUp);
+    el.querySelectorAll('.bar i').forEach(function(b){b.style.width=b.getAttribute('data-w')+'%';});
+    io.unobserve(el);
+  });},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el,i){el.style.transitionDelay=(i%4)*70+'ms';io.observe(el);});
+  var road=document.getElementById('road');
+  new IntersectionObserver(function(es){if(es[0].isIntersecting)document.getElementById('roadFill').style.width='100%';},{threshold:.3}).observe(road);
+
+  /* active nav + progress */
+  var links=[].slice.call(document.querySelectorAll('#links a')),prog=document.getElementById('prog');
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement,y=h.scrollTop;
+    prog.style.width=(y/(h.scrollHeight-h.clientHeight)*100)+'%';
+    var cur=-1; secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<140)cur=i;});
+    links.forEach(function(a,i){a.classList.toggle('active',i===cur);});
+  },{passive:true});
+
+  /* spotlight */
+  document.addEventListener('pointermove',function(e){
+    var c=e.target.closest&&e.target.closest('.card'); if(!c)return;
+    var r=c.getBoundingClientRect(); c.style.setProperty('--mx',(e.clientX-r.left)+'px'); c.style.setProperty('--my',(e.clientY-r.top)+'px');
+  });
+
+  window.addEventListener('beforeprint',function(){document.querySelectorAll('.bar i').forEach(function(b){b.style.width=b.getAttribute('data-w')+'%';});document.getElementById('roadFill').style.width='100%';});
+
+  /* approval */
+  var boxes=[].slice.call(document.querySelectorAll('#checks input')),fg=document.getElementById('ringFg'),C=226.2;
+  var upd=function(){var n=boxes.filter(function(b){return b.checked;}).length;
+    fg.style.strokeDashoffset=C-(C*n/boxes.length);
+    document.getElementById('ringTxt').textContent=n+'/'+boxes.length;
+    document.getElementById('done').classList.toggle('show',n===boxes.length);};
+  boxes.forEach(function(b){b.addEventListener('change',upd);});
+})();
+</script>
+</body>
+</html>
